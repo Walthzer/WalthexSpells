@@ -16,7 +16,7 @@
       https://nuget.samboy.dev/v3/index.json
     </RestoreAdditionalProjectSources>
     <!-- Rename to match the name of your mod -->
-    <RootNamespace>ModTemplate</RootNamespace>
+    <RootNamespace>WalthexSpells</RootNamespace>
   </PropertyGroup>
 
 
@@ -43,6 +43,9 @@
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\..\..\SteamLibrary\steamapps\common\Mage Arena\MageArena_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
+	<Reference Include="BlackMagicAPI">
+		<HintPath>C:\Users\NKvD Officer Walthze\AppData\Roaming\Thunderstore Mod Manager\DataFolder\MageArena\cache\D1GQ-BlackMagicAPI\2.3.2\BepInEx\plugins\BlackMagicAPI\BlackMagicAPI.dll</HintPath>
+	</Reference>
   </ItemGroup>
 
 	<ItemGroup>

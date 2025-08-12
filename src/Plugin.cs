@@ -1,12 +1,13 @@
 ﻿using BepInEx;
 using BepInEx.Logging;
+using BlackMagicAPI.Managers;
 using HarmonyLib;
 using UnityEngine;
-using ModTemplate.Modules;
+using WalthexSpells.Modules;
 
 //Rename this to match the name of your mod, This needs to match the RootNamespace in the `.csproj` so edit that as well.
-// e.g. <RootNamespace>ModTemplate</RootNamespace>
-namespace ModTemplate;
+// e.g. <RootNamespace>WalthexSpells</RootNamespace>
+namespace WalthexSpells;
 
 // Ensure that BepInEx only loads your mod DLL into Mage Arena
 [BepInProcess("MageArena")]
@@ -15,34 +16,20 @@ namespace ModTemplate;
 [BepInDependency("com.magearena.modsync", BepInDependency.DependencyFlags.HardDependency)]
 [BepInPlugin(MyGUID, PluginName, VersionString)]
 //Rename this to match the name of your mod
-public class ModTemplatePlugin : BaseUnityPlugin
+public class WSPlugin : BaseUnityPlugin
 {
-    //Reanme this to match the name used for the class above!
-    internal static ModTemplatePlugin Instance { get; private set; }
-
-    //This is the GUID or the unqiue identifier of your mod. Like a fingerprint!
-    //It is what is used by BepInEx to find and use dependencies.
-    //Use something like com.<name of auther>.<name of mod>.<dev or release> to ensure the GUID of your mod is always unique.
-    private const string MyGUID = "com.walthzer.ModTemplate.dev";
-
-    //Change this to the name of your mod
-    internal const string PluginName = "ModTemplate";
-
-    //Update this to match the version of your mod.
-    //The format used is semantic versioning, see here for details https://semver.org/
+    //Boilerplate but specific
+    internal static WSPlugin Instance { get; private set; }
+    private const string MyGUID = "com.walthzer.walthexspells.dev";
+    internal const string PluginName = "WalthexSpells";
     private const string VersionString = "1.0.0";
-
-
-    //This is related to Harmony, used to patch the Mage Arena Game
+    //Boilerplate
     private static Harmony? Harmony;
-    //This allows you to output text into the console
     internal static new ManualLogSource Logger;
+    public static string modsync = "all";
 
-    //Choose one of the `modync` values and remove the other two.
-    //Most mods will use "all"
-    public static string modsync = "all"; // Requires matching on both host and client - This is what is considered when syncing lobbies
-    //public static string modsync = "host"; // Only required on host - These do not count for syncing lobbies
-    //public static string modsync = "client"; // Only required on client - These do not count for syncing lobbies
+    //Prefabs to be filled by patches. Should use Reflections but can't be bothered
+    public static GameObject FrostBolt;
 
     private void Awake()
     {
@@ -52,10 +39,9 @@ public class ModTemplatePlugin : BaseUnityPlugin
         Harmony = new(MyGUID);
         Harmony.PatchAll();
 
-        //Some example logic, you can delete this
-        //Static method example
-        Logger.LogDebug(ExampleModule.hello_world());
-
+        //Register spells with BlackMagicAPI
+        BlackMagicManager.RegisterSpell(Instance, typeof(IceCreamData), typeof(IceCreamLogic));     //Biden Blast
+        BlackMagicManager.RegisterSpell(Instance, typeof(ThwompData), typeof(ThwompLogic));         //Thwompus Decendus
 
         //Last line of Plugin Logic, to indicate success!
         Logger.LogInfo($"Plugin {MyGUID} v{VersionString} is loaded!");
