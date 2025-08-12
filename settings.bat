@@ -3,7 +3,7 @@
 
 ::Change this to match the name of your Mod. It sets the name in Thunderstore and the release zip file.
 ::Cannot contain spaces or special characters, no ' or " either!
-set MOD_NAME=text
+set MOD_NAME=WalthexSpells
 :: Change this your your anme as the author
 set MOD_AUTHOR=Walthzer
 ::Change this to your mods version, it will be set automatically into the `manifest.json` and the release zip
