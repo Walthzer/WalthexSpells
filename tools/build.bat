@@ -38,4 +38,5 @@ IF EXIST %LOCAL_MOD_PATH% (
 )
 cd build
 winrar a -r -afzip ../%MOD_NAME%-%MOD_VERSION%.zip *.*
+cd ..
 echo %MOD_NAME% v%MOD_VERSION% has been built succesfully.

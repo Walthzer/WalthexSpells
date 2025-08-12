@@ -8,8 +8,9 @@ namespace WalthexSpells.Modules;
 internal class IceCreamLogic : SpellLogic
 {
     public static GameObject iceCreamPrefab;
-    private static int coneSpreadAngle = 45;
-    private static int baseConesCount = 5;
+    private static int coneSpreadAngle = 55;
+    private static int baseConesCount = 7;
+    private static float coneVelocity = 50f;
     private GameObject[] cones;
 
     public static void Init()
@@ -32,18 +33,26 @@ internal class IceCreamLogic : SpellLogic
             return;
         }
 
+        Mesh iceCreamMesh = iceCreamPrefab.GetComponent<MeshFilter>().mesh;
+        Material[] iceCreamMaterials = iceCreamPrefab.GetComponent<MeshRenderer>().GetMaterialArray();
+
         //Do Spell
         //Add extra projectiles for every castingLevel above 1
-        // 5 projectiles for level 1
-        // 7 projectiles for level 2
-        // 9 projectiles for level 3
+        // 7 projectiles for level 1
+        // 9 projectiles for level 2
+        // 11 projectiles for level 3
         int conesCount = baseConesCount + ((castingLevel-1) * 2);
         cones = new GameObject[conesCount];
         for (int i = 0; i < cones.Length; i++)
         {
             cones[i] = Instantiate(WSPlugin.FrostBolt, spawnPos, Quaternion.identity);
+            GameObject icespike = cones[i].transform.Find("icespike").gameObject;
+            icespike.GetComponent<MeshFilter>().mesh = iceCreamMesh;
+            icespike.GetComponent<MeshRenderer>().SetMaterialArray(iceCreamMaterials);
+            icespike.transform.rotation = icespike.transform.rotation * Quaternion.Euler(90, 0, 0);
+
             FrostBoltController controller = cones[i].GetComponent<FrostBoltController>();
-            controller.muzzleVelocity = 40f;
+            controller.muzzleVelocity = coneVelocity;
             controller.PlayerSetup(playerObj, ConeLaunchVector(viewDirectionVector, i, conesCount), castingLevel);
         }
 

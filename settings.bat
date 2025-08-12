@@ -14,4 +14,4 @@ set MOD_VERSION=1.0.0
 :: You can find the path from `Settings > Browse Profile Folder` then `BepInEx\plugins\Author-MOD_NAME`
 :: Example: C:\Users\Walthzer\AppData\Roaming\Thunderstore Mod Manager\DataFolder\MageArena\profiles\DEVELOPMENT\BepInEx\plugins\Walthzer-MageArenaModTemplate\
 :: This PATH must end in a `\` backslash
-set THUNDERSTORE_LOCAL_MOD_PATH=PUT_PATH_HERE
+set THUNDERSTORE_LOCAL_MOD_PATH=C:\Users\NKvD Officer Walthze\AppData\Roaming\Thunderstore Mod Manager\DataFolder\MageArena\profiles\DEVELOPMENT

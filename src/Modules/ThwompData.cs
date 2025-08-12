@@ -5,9 +5,9 @@ namespace WalthexSpells.Modules
 {
     internal class ThwompData : SpellData
     {
-        public override string Name => "Thwompus Decendus";
+        public override string Name => "Tump Decendus";
 
-        public override string[] SubNames => ["Thwomp Decendus", "Tomp Decendus", "Thwompus decend", "Thwomp decend", "Tomp decend"];
+        public override string[] SubNames => ["flatten enemy", "Thwomp Decendus", "Tomp Decendus", "Thwompus decend", "Thwomp decend", "Tomp decend"];
 
         public override float Cooldown => 20;
 

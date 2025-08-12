@@ -44,10 +44,10 @@ public class WSPlugin : BaseUnityPlugin
         Harmony = new(MyGUID);
         Harmony.PatchAll();
 
-        SpellAssets = Assembly.GetExecutingAssembly().LoadAssetBundleFromResources("WalthexSpells.Resources.Spells");
+        SpellAssets = Assembly.GetExecutingAssembly().LoadAssetBundleFromResources("WalthexSpells.Resources.spells");
         if (SpellAssets == null)
         {
-            Logger.LogError("Failed to load assetBundle from resources: Spells");
+            Logger.LogError("Failed to load assetBundle from resources: spells");
             return;
         }
 

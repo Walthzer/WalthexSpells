@@ -29,6 +29,9 @@ internal class ThwompLogic : SpellLogic
             return;
         }
 
-        GameObject Thwomp =  Instantiate(ThwompPrefab, spawnPos + new Vector3(0, 50, 0), Quaternion.identity);
+        GameObject cone = Instantiate(WSPlugin.SpellAssets.LoadAsset<GameObject>("iceCream"), spawnPos, Quaternion.identity);
+        GameObject Thwomp =  Instantiate(ThwompPrefab, spawnPos + (Vector3.up * 100), Quaternion.identity);
+        WSPlugin.Logger.LogDebug("Thwomp instance is:");
+        WSPlugin.Logger.LogDebug(Thwomp);
     }
 }
