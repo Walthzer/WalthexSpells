@@ -1,7 +1,9 @@
 ﻿using BepInEx;
 using BepInEx.Logging;
+using BlackMagicAPI.Helpers;
 using BlackMagicAPI.Managers;
 using HarmonyLib;
+using System.Reflection;
 using UnityEngine;
 using WalthexSpells.Modules;
 
@@ -14,6 +16,7 @@ namespace WalthexSpells;
 //This creates a dependency onto the ModSync mod, but only for BepInEX! Thunderstore only reads dependencies from the `manifest.json `
 //Do not forget to include any dependecies there as well.
 [BepInDependency("com.magearena.modsync", BepInDependency.DependencyFlags.HardDependency)]
+[BepInDependency("com.d1gq.black.magic.api", BepInDependency.DependencyFlags.HardDependency)]
 [BepInPlugin(MyGUID, PluginName, VersionString)]
 //Rename this to match the name of your mod
 public class WSPlugin : BaseUnityPlugin
@@ -28,6 +31,8 @@ public class WSPlugin : BaseUnityPlugin
     internal static new ManualLogSource Logger;
     public static string modsync = "all";
 
+    public static AssetBundle SpellAssets;
+
     //Prefabs to be filled by patches. Should use Reflections but can't be bothered
     public static GameObject FrostBolt;
 
@@ -39,9 +44,16 @@ public class WSPlugin : BaseUnityPlugin
         Harmony = new(MyGUID);
         Harmony.PatchAll();
 
-        //Register spells with BlackMagicAPI
-        BlackMagicManager.RegisterSpell(Instance, typeof(IceCreamData), typeof(IceCreamLogic));     //Biden Blast
-        BlackMagicManager.RegisterSpell(Instance, typeof(ThwompData), typeof(ThwompLogic));         //Thwompus Decendus
+        SpellAssets = Assembly.GetExecutingAssembly().LoadAssetBundleFromResources("WalthexSpells.Resources.Spells");
+        if (SpellAssets == null)
+        {
+            Logger.LogError("Failed to load assetBundle from resources: Spells");
+            return;
+        }
+
+        //Init spells and Register with BlackMagicAPI 
+        IceCreamLogic.Init(); //Biden Blast
+        ThwompLogic.Init(); //Thwompus Decendus       
 
         //Last line of Plugin Logic, to indicate success!
         Logger.LogInfo($"Plugin {MyGUID} v{VersionString} is loaded!");

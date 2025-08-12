@@ -1,4 +1,5 @@
-﻿using BlackMagicAPI.Modules.Spells;
+﻿using BlackMagicAPI.Managers;
+using BlackMagicAPI.Modules.Spells;
 using System.Collections;
 using UnityEngine;
 
@@ -6,10 +7,22 @@ namespace WalthexSpells.Modules;
 
 internal class IceCreamLogic : SpellLogic
 {
+    public static GameObject iceCreamPrefab;
     private static int coneSpreadAngle = 45;
     private static int baseConesCount = 5;
     private GameObject[] cones;
 
+    public static void Init()
+    {
+        iceCreamPrefab = WSPlugin.SpellAssets.LoadAsset<GameObject>("iceCream");
+        if (iceCreamPrefab == null)
+        {
+            WSPlugin.Logger.LogError("Failed to load GameObject from SpellAssets: iceCream");
+            return;
+        }
+        //Register spells with BlackMagicAPI
+        BlackMagicManager.RegisterSpell(WSPlugin.Instance, typeof(IceCreamData), typeof(IceCreamLogic));
+    }
     public override void CastSpell(GameObject playerObj, PageController page, Vector3 spawnPos, Vector3 viewDirectionVector, int castingLevel)
     {
         //Frost bolt reference is required:
